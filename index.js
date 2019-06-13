@@ -28,4 +28,4 @@ app
   .use(errorHandler)
   .use(router.routes())
 
-  .listen(port, () => {})
+  .listen(port, () => {console.log(`Server listening on port ${port}`)});
