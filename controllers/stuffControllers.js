@@ -1,4 +1,4 @@
-const Stuff = require('../db/stuffModel')
+const Stuff = require('../models/stuffModel')
 
 module.exports.getAll = async (ctx, next) => {
   let stuffs = await Stuff.find()
