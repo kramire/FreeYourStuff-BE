@@ -8,11 +8,20 @@ module.exports.getAll = async (ctx, next) => {
 }
 
 module.exports.create = async (ctx, next) => {
+  
   let stuff = await new Stuff(ctx.request.body)
-  stuff.save()
-  ctx.body = stuff
-  ctx.status = 200
+  
+  try {
+    await stuff.save()
+  }
+  catch (e) {
+    ctx.status = 418
+    ctx.body = e
+  }
+  
   await next()
+  // ctx.body = stuff
+  // ctx.status = 200
 }
 
 module.exports.update = async (ctx, next) => {
