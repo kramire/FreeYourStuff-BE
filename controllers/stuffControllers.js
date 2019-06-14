@@ -15,7 +15,7 @@ module.exports.create = async (ctx, next) => {
   await stuff.save()
     .then(() => {
       ctx.body = stuff;
-      ctx.status = 200;
+      ctx.status = 201;
     })
     .catch();
 }
@@ -47,11 +47,10 @@ module.exports.update = async (ctx, next) => {
 
 // Refactored to use const.
 // Refactored to check for OK status from remove method.
+// Building test cases helped correct this controller.
 module.exports.delete = async (ctx, next) => {
   const _id = ctx.params.id;
   await Stuff.remove({_id})
-    .then(res => {
-      if (res.ok === 1) ctx.status = 200
-    })
+    .then(res => ctx.body = res)
     .catch();
 }
