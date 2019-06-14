@@ -4,7 +4,11 @@
   "description": "",
   "main": "./index.js",
   "scripts": {
-    "start": "node ./index.js"
+    "start": "node ./index.js",
+    "test": "jest --forceExit"
+  },
+  "jest": {
+  "testEnvironment": "node"
   },
   "engines": {
     "node": "~8.11.1",
@@ -14,13 +18,15 @@
   "license": "ISC",
   "dependencies": {
     "cloudinary": "^1.11.0",
+    "dotenv": "^6.0.0",
+    "jest": "^24.8.0",
     "kcors": "^2.2.2",
     "koa": "^2.5.2",
     "koa-body": "^4.0.4",
     "koa-router": "^7.4.0",
     "mongoose": "^5.2.5",
-    "uuid": "^3.3.2",
-    "dotenv": "^6.0.0"
+    "supertest": "^4.0.2",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "eslint": "^5.2.0",

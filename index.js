@@ -3,7 +3,7 @@ require('dotenv').config();
 
 const Koa = require('koa');
 const app = new Koa();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 5001;
 
 const cors = require('kcors');
 const bodyparser = require('koa-body');
@@ -14,5 +14,9 @@ app
   .use(cors())
   .use(bodyparser())
   .use(errorHandler)
-  .use(router.routes())
-  .listen(port, () => console.log(`Server listening on port ${port}`));
+  .use(router.routes());
+
+const server = app.listen(port, () => console.log(`Server listening on port ${port}`));
+
+module.exports = server;
+

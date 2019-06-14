@@ -15,7 +15,7 @@ module.exports.create = async (ctx, next) => {
   await stuff.save()
     .then(() => {
       ctx.body = stuff;
-      ctx.status = 200;
+      ctx.status = 201;
     })
     .catch();
 }
