@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+const mongoose = require('./db');
 
 const stuffSchema = mongoose.Schema({
 
@@ -23,6 +23,6 @@ const stuffSchema = mongoose.Schema({
     type: Number,
     default: 0
   }
-})
+});
 
-module.exports = mongoose.model('Stuff', stuffSchema)
+module.exports = mongoose.model('Stuff', stuffSchema);
