@@ -70,6 +70,9 @@ module.exports.update = async (ctx, next) => {
 module.exports.delete = async (ctx, next) => {
   const _id = ctx.params.id;
   await Stuff.remove({_id})
-    .then(res => ctx.body = res)
+    .then(res => {
+      ctx.body = res;
+      ctx.status = 200;
+    })
     .catch();
 }

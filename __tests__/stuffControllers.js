@@ -8,21 +8,12 @@ const { mockNewStuff, mockFalsyStuff, mockupdateStuff, mockFalsyIds } = require(
 jest.mock('../models/stuffModel');
 
 describe('Controller Unit Testing -- With Mocked Stuff Model', () => {
-  
+
   test('getAll Unit Test', async () => {
 
     // setup
-    const ctx = {
-      request: {
-        method: 'GET',
-        header: {
-          'Content-Type': 'application/json'
-        }
-      }
-    };
-
+    const ctx = {request: jest.fn()};
     Stuff.find.mockImplementation(() => Promise.resolve([]));
-
     const getAllSpy = jest.spyOn(ctrl, 'getAll');
 
     // work
@@ -39,18 +30,8 @@ describe('Controller Unit Testing -- With Mocked Stuff Model', () => {
   test('create Unit Test', async () => {
 
     // setup
-    const ctx = {
-      request: {
-        method: 'POST',
-        header: {
-          'Content-Type': 'application/json'
-        },
-        body: {}
-      }
-    };
-
+    const ctx = {request: jest.fn()};
     Stuff.prototype.save.mockImplementation(() => Promise.resolve({'hi': 'there'}));
-
     const createSpy = jest.spyOn(ctrl, 'create');
 
     // work
@@ -61,5 +42,45 @@ describe('Controller Unit Testing -- With Mocked Stuff Model', () => {
     expect(createSpy).toHaveBeenCalledWith(ctx, expect.any(Function));
     expect(ctx.body).toEqual({'hi': 'there'});
     expect(ctx.status).toBe(201);
+  });
+
+  test('update Unit Test', async () => {
+
+    // setup
+    const ctx = {
+      request: {body: jest.fn()},
+      params: jest.fn()
+    };
+    Stuff.findOneAndUpdate = jest.fn(() => Promise.resolve({'hi': 'there'}));
+    const updateSpy = jest.spyOn(ctrl, 'update');
+
+    // work
+    await ctrl.update(ctx, ()=>{});
+
+    // assertions/expects
+    expect(updateSpy).toHaveBeenCalledTimes(1);
+    expect(updateSpy).toHaveBeenCalledWith(ctx, expect.any(Function));
+    expect(ctx.body).toEqual({'hi': 'there'});
+    expect(ctx.status).toBe(200);
+  });
+
+  test('delete Unit Test', async () => {
+
+    // setup
+    const ctx = {
+      request: {body: jest.fn()},
+      params: jest.fn()
+    };
+    Stuff.remove = jest.fn(() => Promise.resolve({'hi': 'there'}));
+    const deleteSpy = jest.spyOn(ctrl, 'delete');
+
+    // work
+    await ctrl.delete(ctx, ()=>{});
+
+    // assertions/expects
+    expect(deleteSpy).toHaveBeenCalledTimes(1);
+    expect(deleteSpy).toHaveBeenCalledWith(ctx, expect.any(Function));
+    expect(ctx.body).toEqual({'hi': 'there'});
+    expect(ctx.status).toBe(200);
   });
 });
