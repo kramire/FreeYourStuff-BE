@@ -7,14 +7,33 @@ module.exports.getAll = async (ctx, next) => {
   ctx.status = 200;
 }
 
+
+// class StuffCrtl {
+//   constructor () {
+//     this.Model = sSuff;
+//   }
+// }
+
+// // test.js
+// const crlt = new StuffCrtl();
+// fakeStuff.find = () => []
+// crtl.Model = fakeStuff;
+
+// test.js
+
+// const ctx = {}
+// Stuff.find = () => []
+// ctrl.getAll(ctx, ()=>{}, Stuff)
+
+
 // Refactored to use const.
 // Refactored to properly catch error, or update body.
 module.exports.create = async (ctx, next) => {
   const stuff = await new Stuff(ctx.request.body);
 
   await stuff.save()
-    .then(() => {
-      ctx.body = stuff;
+    .then((result) => {
+      ctx.body = result;
       ctx.status = 201;
     })
     .catch();
