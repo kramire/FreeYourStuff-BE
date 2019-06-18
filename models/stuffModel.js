@@ -1,6 +1,6 @@
 const mongoose = require('./db');
 
-const stuffSchema = mongoose.Schema({
+const stuffSchema = new mongoose.Schema({
 
   time: {
     type: Date,
@@ -24,5 +24,26 @@ const stuffSchema = mongoose.Schema({
     default: 0
   }
 });
+
+class StuffClass {
+
+  static setFields(updates, id) {
+    const updateKeys = Object.keys(updates);
+    const setObj = {};
+
+    updateKeys.forEach(key => {
+      if (Object.keys(this.schema.obj).includes(key)) setObj[key] = updates[key];
+    });
+
+    return this.findOneAndUpdate(
+      {_id: id},
+      {$set: setObj},
+      {new: true}, (
+        (err, updatedStuff) => err ? err : updatedStuff)
+      )
+  }
+}
+
+stuffSchema.loadClass(StuffClass);
 
 module.exports = mongoose.model('Stuff', stuffSchema);

@@ -45,18 +45,8 @@ module.exports.create = async (ctx, next) => {
 // Refactored to update only passed values, if defined in schema. Avoids setting nulls.
 // Need then/catch bc callback would sometimes execute before it had result.
 module.exports.update = async (ctx, next) => {
-  const updates = ctx.request.body;
-  const updateKeys = Object.keys(updates);
-  const setObj = {};
-
-  updateKeys.forEach(key => {
-    if (Object.keys(Stuff.schema.obj).includes(key)) setObj[key] = updates[key];
-  });
-
-  await Stuff.findOneAndUpdate(
-    {_id: ctx.params.id},
-    {$set: setObj},
-    {new: true}, ((err, updatedStuff) => err ? err : updatedStuff))
+  
+  await Stuff.setFields(ctx.request.body, ctx.params.id)
     .then((res) => {
       ctx.body = res;
       ctx.status = 200;

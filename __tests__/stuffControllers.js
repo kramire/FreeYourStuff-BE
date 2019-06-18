@@ -54,14 +54,14 @@ describe('Controller Unit Testing -- With Mocked Stuff Model', () => {
       params: {}
     };
     const result = {'hi': 'there'};
-    Stuff.findOneAndUpdate = jest.fn(() => Promise.resolve(result));
-    const spyFindOneUpdate = jest.spyOn(Stuff, 'findOneAndUpdate');
+    Stuff.setFields = jest.fn(() => Promise.resolve(result));
+    const spySetFields = jest.spyOn(Stuff, 'setFields');
 
     // work
     await ctrl.update(ctx, ()=>{});
 
     // assertions/expects
-    expect(spyFindOneUpdate).toHaveBeenCalledTimes(1);
+    expect(spySetFields).toHaveBeenCalledTimes(1);
     expect(ctx.body).toBe(result);
     expect(ctx.status).toBe(200);
   });
