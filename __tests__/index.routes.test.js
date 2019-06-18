@@ -1,15 +1,18 @@
 const request = require('supertest');
-const server = require('../');
+const app = require('../');
+const  mongoose = require('../models/db')
 const { mockNewStuff, mockFalsyStuff, mockupdateStuff, mockFalsyIds } = require('../__mocks__/routes.mocks');
 
-beforeAll(async () => {
+let server;
+beforeAll( (done) => {
+  server = app.listen(6000, done)
   console.log('Tests starting!!!');
 });
 
 // --detectOpenHandles` async operations that kept running after all tests
-afterAll(async (done) => {
-  server.close();
-  done();
+afterAll( async (done) => {
+  await mongoose.connection.close()
+  server.close(done);
   console.log('Tests finished');
 });
 
@@ -105,3 +108,4 @@ describe('Routes testing -- status & type & body', () => {
     expect(deleteResponse.body.n).toEqual(0);
   });
 });
+
