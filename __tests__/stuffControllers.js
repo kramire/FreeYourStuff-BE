@@ -1,6 +1,5 @@
 const Stuff = require('../models/stuffModel');
 const ctrl = require('../controllers/stuffControllers');
-const { mockNewStuff, mockFalsyStuff, mockupdateStuff, mockFalsyIds } = require('../__mocks__/routes.mocks');
 
 // mocking the implementation of the Stuff.find method
 // staying that it returns a promise that we then resolve
